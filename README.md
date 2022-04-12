@@ -62,7 +62,7 @@ flake8 && pylint <module_name>
 
 - Development: `uvicorn src.main:app --reload`
 - Production: `uvicorn src.main:app`
-- Production Container: `docker build -t fastapi-server . && docker run -p 8080:80 fastapi-server`
+- Production Container: `docker build -t fastapi-server . && docker run -dp 8080:8080 fastapi-server`
 
 ## API Documentation
 
