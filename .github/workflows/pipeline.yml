@@ -73,6 +73,8 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
+      - name: Install requests
+        run: poetry run pip3 install requests
       #----------------------------------------------
       # install your root project, if required
       #----------------------------------------------
