@@ -37,7 +37,7 @@ $ poetry show -v
 
 ### Adding new dependencies
 
-Check the full poetry docs, but here goes a quick reminder,
+Check the [full poetry docs](https://python-poetry.org/docs/cli/), but here goes a quick reminder,
 
 ```bash
 poetry add <dependency> [--dev]
@@ -56,13 +56,11 @@ For this purpose, we use:
 flake8 && pylint <module_name>
 ```
 
-
-
 ## Running the server
 
 - Development: `uvicorn src.main:app --reload`
 - Production: `uvicorn src.main:app`
-- Production Container: `docker build -t fastapi-server . && docker run -dp 8080:8080 fastapi-server`
+- Production Container: `docker-compose up -d`
 
 ## API Documentation
 
@@ -72,7 +70,6 @@ Documentation will be automatically generated at `{app}/docs`
 
 We use the [pytest framework](https://fastapi.tiangolo.com/tutorial/testing/) to test. The easiest way to run tests is `pytest`.
 Remember to create functions with a name that starts with `test_` (this is standard pytest conventions).
-
 
 ## Github Actions
 
