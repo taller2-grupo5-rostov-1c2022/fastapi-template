@@ -49,12 +49,21 @@ This template follows [PEP8](https://www.python.org/dev/peps/pep-0008/).
 
 For this purpose, we use:
 
+- [black](https://github.com/psf/black): an opinionated code formatting tool
 - [flake8](https://github.com/PyCQA/flake8): a tool to enforce style guide
 - [pylint](https://github.com/PyCQA/pylint): a source code, bug and quality checker
+
+**Linters**
 
 ```bash
 flake8 && pylint <module_name>
 ```
+
+**Formatter**
+```bash
+black .
+```
+
 
 ## Running the server
 
