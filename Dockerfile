@@ -1,32 +1,20 @@
-FROM python:3.9 as python-base
+FROM python:3.9
 
-ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PIP_NO_CACHE_DIR=off PIP_DISABLE_PIP_VERSION_CHECK=on PIP_DEFAULT_TIMEOUT=100 POETRY_HOME="/opt/poetry" POETRY_VIRTUALENVS_IN_PROJECT=true POETRY_NO_INTERACTION=1 PYSETUP_PATH="/opt/pysetup" VENV_PATH="/opt/pysetup/.venv"
+ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=off PIP_DISABLE_PIP_VERSION_CHECK=on OETRY_NO_INTERACTION=1
 
-# prepend poetry and venv to path
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
-
-###############################################
-# Builder Image
-###############################################
-FROM python-base as builder-base
-
-# install poetry - respects $POETRY_VERSION & $POETRY_HOME
+# install poetry
 RUN pip install poetry
 
 # copy project requirement files here to ensure they will be cached.
-WORKDIR $PYSETUP_PATH
-COPY poetry.lock pyproject.toml ./
+WORKDIR /code
+COPY poetry.lock pyproject.toml /code/
 
+# install runtime deps
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-interaction --no-ansi
 
-# install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
-RUN poetry install
+COPY ./src ./src/
+COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
 
-###############################################
-# Production Image
-###############################################
-FROM python-base as production
-COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
-COPY ./src /src/
-COPY ./start.sh /start.sh
-RUN chmod +x /start.sh
-CMD ["./start.sh"]
+CMD ["./docker-entrypoint.sh"]
