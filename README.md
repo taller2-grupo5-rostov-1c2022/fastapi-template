@@ -112,3 +112,14 @@ You'll need to set the following actions secrets:
 - `HEROKU_APP_NAME`: App name
 - `HEROKU_EMAIL`: Account email
 - `HEROKU_API_KEY`: Account [API key](https://dashboard.heroku.com/account)
+
+## Datadog
+
+The heroku Dockerfile includes the DataDog agent.  Create a new DataDog API Key from [here](https://app.datadoghq.com/organization-settings/api-keys).
+Also, you need to set the following config vars in Heroku (you can use [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) if you want):
+```bash
+DD_API_KEY=<api_key_from_datadog>
+DD_DYNO_HOST=false
+HEROKU_APP_NAME=<app_name>
+DD_TAGS=service:<meaningful_tag_for_datadog>
+```
