@@ -7,11 +7,13 @@ RUN pip install poetry
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR /code
-COPY . .
+COPY ./poetry.lock ./pyproject.toml /code/
 
 # install runtime deps
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi
+
+COPY . .
 
 RUN chmod +x ./docker-entrypoint.sh
 
